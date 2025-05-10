@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+    <title>Sparkthon</title>
+    <style>
+        body {
+            font-family: "Lexend", sans-serif;
+                        /* background-color: #0093E9;
+            background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%); */
+            background-color: white;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            position: relative;
+        }
+        .body {
+            font-family: "Lexend", sans-serif;
+            font-optical-sizing: auto;
+        font-style: normal;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            justify-content: space-between;
+            margin-right: 200px;
+        }
+        .lexend-font {
+            font-family: "Lexend", sans-serif;
+            font-optical-sizing: auto;
+            font-style: normal;
+        }
+        .logout-container {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        .logout-button{
+            color: white;
+            background-color: black; 
+            text-decoration: none !important;
+            text-align: center;
+            border: 0px solid; 
+            width: 80px; 
+            border-radius: 50vw;
+            padding-top: 8px;
+            padding-bottom: 10px;
+            text-decoration: none;
+            align-items: center;
+            transition: 500ms;
+        }
+        .logout-button:hover {
+            background-color: white;
+            color: black;
+            transform: scale(1.1);
+        }
+        .chat-container {
+            width: 700px;
+            height: 400px;
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        .chat-box {
+            height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 15px;
+            background-color: #ffffff;
+        }
+        .message {
+            margin-bottom: 10px;
+        }
+        .user-message {
+            text-align: right;
+            color: #007bff;
+        }
+        .bot-message {
+            text-align: left;
+            color: #333;
+        }
+        .input-container {
+            display: flex;
+            gap: 10px;
+        }
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .speech-button {
+            background-color: rgba(128, 128, 128, 0.637);
+        }
+        .speech-button:hover {
+            background-color: grey;
+        }
+        .listening-indicator {
+            display: none;
+            color: #28a745;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .img-container{
+            background-image: url(https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExeDFwM3hzMXF3OHpremhuYjJjbmUyNWM2Y3NtajNyMmliOHUyaXRncyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/rbwoL7kN0M8hnPMDkC/giphy.gif);
+            background-size: cover;
+        
+        }
+        .fade {
+            position: absolute;
+            top: 30%;
+            left: 60%;
+            transform: translate(-50%, -50%);
+            font-size: 2em;
+            text-align: center;
+            opacity: 1;
+            animation: fadeOut 1s ease-in-out 3s forwards;
+        }
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+    </style>
+</head>
+<body>
+    <h1 class="fade lexend-font" style="font-size: 40px;">EduInsight a ChatBot that turns academic analysis upside down.</h1>
+    <div style="display: flex; margin-right: 0px;" class="body">
+        <div class="img-container" style=" height: 100vh;width: 350px; display: flex; justify-content: center; align-items: center; color: white; flex-direction: column;">
+            <h1 style="margin-left: 45px; margin-right: 40px;">Welcome, Deepa ma'am</h1>
+            <h2 style="margin-left: 50px; margin-right: 40px;">This is your personalized dashboard. You can interact with the chatbot.</h2>
+        </div>
+        <div class="logout-container">
+            <button class="logout-button lexend-font" onclick="logout()">Logout</button>
+        </div>
+    
+        <div>
+            <div class="chat-box" id="chat-box" style="width: 65vw; height: 65vh; border: none; margin-right: 50px; margin-top: 50px;"></div>
+            <div class="input-container lexend-font" style="margin-right: 250px; margin-left: 200px;">
+                <input type="text" id="user-input" placeholder="Type your message..." style="border-radius: 50px; border: none; box-shadow: 0px 3px 10px rgba(128, 128, 128, 0.705);">
+                <button onclick="sendMessage()" class="lexend-font">Send</button>
+                <button class="speech-button" onclick="startSpeechRecognition()">
+                    <i class="bi bi-mic-fill"></i>
+                </button>
+            </div>
+            <div class="listening-indicator" id="listening-indicator">Listening...</div>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            const userInput = document.getElementById("user-input").value;
+            if (!userInput) return;
+
+            const chatBox = document.getElementById("chat-box");
+            const userMessage = document.createElement("div");
+            userMessage.className = "message user-message";
+            userMessage.textContent = `You: ${userInput}`;
+            chatBox.appendChild(userMessage);
+
+            document.getElementById("user-input").value = "";
+
+            fetch("/chat", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message: userInput }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                const botMessage = document.createElement("div");
+                botMessage.className = "message bot-message";
+                botMessage.textContent = `Bot: ${data.response}`;
+                chatBox.appendChild(botMessage);
+                chatBox.scrollTop = chatBox.scrollHeight;
+            })
+            .catch(error => console.error("Error:", error));
+        }
+
+        function logout() {
+            fetch("/logout").then(() => window.location.href = "/login")
+            .catch(error => console.error("Error:", error));
+        }
+
+        function startSpeechRecognition() {
+            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.lang = "en-US";
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            const listeningIndicator = document.getElementById("listening-indicator");
+            listeningIndicator.style.display = "block";
+
+            recognition.start();
+
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                document.getElementById("user-input").value = transcript;
+                listeningIndicator.style.display = "none";
+            };
+
+            recognition.onerror = (event) => {
+                console.error("Speech recognition error:", event.error);
+                listeningIndicator.style.display = "none";
+            };
+
+            recognition.onspeechend = () => {
+                recognition.stop();
+                listeningIndicator.style.display = "none";
+            };
+        }
+    </script>
+
+</body>
+</html>
